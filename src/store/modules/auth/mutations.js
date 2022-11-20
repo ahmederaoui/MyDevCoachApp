@@ -3,6 +3,8 @@ export default{
         state.token = payload.token;
         state.userId=payload.userId;
         state.email = payload.email;
-        state.tokenExpiration = payload.tokenExpiration;
+    },
+    setAutoLogout(state){
+        state.autoLogout = true
     }
 }

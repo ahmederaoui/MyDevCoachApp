@@ -8,9 +8,10 @@ export default {
       hourlyRate: data.rate,
       areas: data.areas,
     };
-
+    const token = await context.rootGetters.token;
     const response = await fetch(
-      `https://coachingapp-d02f3-default-rtdb.firebaseio.com/coaches/${userId}.json`,
+      `https://coachingapp-d02f3-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=` +
+        token,
       {
         method: "PUT",
         body: JSON.stringify(coachData),
@@ -26,22 +27,22 @@ export default {
       id: userId,
     });
   },
-  async loadCoaches(context,payload) {
-    if(!payload.forceRefresh && !context.getters.shouldUpdate){
-        return;
+  async loadCoaches(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
     }
     const response = await fetch(
       `https://coachingapp-d02f3-default-rtdb.firebaseio.com/coaches.json`
     );
     const responseData = await response.json();
     if (!response.ok) {
-      const error = new Error(responseData.message || 'failed to fetch');
+      const error = new Error(responseData.message || "failed to fetch");
       throw error;
     }
     const coaches = [];
     for (const key in responseData) {
       const coach = {
-        id : key,
+        id: key,
         firstName: responseData[key].firstName,
         lastName: responseData[key].lastName,
         description: responseData[key].description,
@@ -50,8 +51,7 @@ export default {
       };
       coaches.push(coach);
     }
-    context.commit('setCoaches',coaches);
-    context.commit('setFetchTimestampe');
-
+    context.commit("setCoaches", coaches);
+    context.commit("setFetchTimestampe");
   },
 };

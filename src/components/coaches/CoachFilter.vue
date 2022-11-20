@@ -34,14 +34,10 @@ export default {
         setFilter(event){
             const inputId = event.target.id;
             const isActive =  event.target.checked;
-            console.log(isActive)
-            console.log(inputId)
             const updatedFilters = {
                 ...this.filters,
                 [inputId]:isActive
             };
-            console.log(updatedFilters)
-            console.log("setFilers1");
             this.filters = updatedFilters;
             this.$emit('change-filter',updatedFilters);
         },

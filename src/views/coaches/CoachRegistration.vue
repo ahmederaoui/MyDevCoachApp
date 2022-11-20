@@ -15,12 +15,12 @@ export default {
     CoachForm,
     BaseCard,
   },
-  methods :{
-    saveData(formData){
-        this.$store.dispatch('coaches/registerCoach',formData);
-        this.$router.replace('/coaches'); 
-    }
-  }
+  methods: {
+    saveData(formData) {
+      this.$store.dispatch("coaches/registerCoach", formData);
+      this.$router.replace("/coaches");
+    },
+  },
 };
 </script>
 

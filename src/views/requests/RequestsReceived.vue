@@ -1,26 +1,30 @@
 <template>
-<div>
-  <base-dialog :show="!!error" title="An error accurred!" @close="handleError">
-    <p>{{ error }}</p>
-  </base-dialog>
-  <section>
-    <base-card>
-      <header>
-        <h2>Requests Received</h2>
-      </header>
-      <base-spinner v-if="isLoading"></base-spinner>
-      <ul v-else-if="hasRequests && !isLoading">
-        <requests-item
-          v-for="request in receivedRequest"
-          :key="request.id"
-          :email="request.userEmail"
-          :message="request.message"
-        ></requests-item>
-      </ul>
-      <h3 v-else>you haven't received any requests yet!</h3>
-    </base-card>
-  </section>
-</div>
+  <div>
+    <base-dialog
+      :show="!!error"
+      title="An error accurred!"
+      @close="handleError"
+    >
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <base-card>
+        <header>
+          <h2>Requests Received</h2>
+        </header>
+        <base-spinner v-if="isLoading"></base-spinner>
+        <ul v-else-if="hasRequests && !isLoading">
+          <requests-item
+            v-for="request in receivedRequest"
+            :key="request.id"
+            :email="request.userEmail"
+            :message="request.message"
+          ></requests-item>
+        </ul>
+        <h3 v-else>you haven't received any requests yet!</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -44,7 +48,7 @@ export default {
       return this.$store.getters["requests/hasRequests"];
     },
   },
-  created(){
+  created() {
     this.loadRequests();
   },
   methods: {
@@ -58,7 +62,7 @@ export default {
       this.isLoading = false;
     },
     handleError() {
-      this.error = null
+      this.error = null;
     },
   },
 };

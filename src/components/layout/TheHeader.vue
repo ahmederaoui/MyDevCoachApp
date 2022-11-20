@@ -4,7 +4,14 @@
       <h1><router-link to="/">   My <br/>Dev Coach</router-link></h1>
       <ul>
         <li><router-link to="/coaches">All Coaches</router-link></li>
-        <li><router-link to="/requests">Requests</router-link></li>
+        <li v-if="isLoggedIn"><router-link to="/requests">Requests</router-link></li>
+        <li v-else>
+            <router-link to="/auth">Login</router-link>
+        </li>
+        <li v-if="isLoggedIn">
+            <base-button @click="logout">Logout</base-button>
+        </li>
+        <li v-if="isLoggedIn" class="user" @click="profile"><i class='fas fa-user-circle' style='font-size:24px;color:white'></i><p>{{email}}</p></li>
       </ul>
     </nav>
   </header>
@@ -13,11 +20,47 @@
 <script>
 
 export default {
-   
+   computed:{
+    isLoggedIn(){
+        return this.$store.getters.isAuthenticated;
+    },
+    email(){
+      return this.$store.getters.getEmail;
+    },
+    
+   },
+   methods:{
+    logout(){
+        this.$store.dispatch('logout');
+        this.$router.replace('/coaches');
+    },
+    profile(){
+      const route = '/coaches/'+this.$store.getters.userId;
+      console.log(this.$store.getters.userId)
+      if(!this.$store.getters['coaches/isCoach']){
+        return;
+      }
+      this.$router.replace(route)
+    }
+   }
 };
 </script>
 
 <style scoped>
+.user{
+  margin: auto;
+  text-align: center;
+  cursor: pointer;
+}
+.user .fas{
+  margin-top: 22px;
+  padding-bottom: 0;
+}
+.user p{
+  margin-top: 0;
+  padding-top: 0;
+  color: white;
+}
 header {
   width: 100%;
   height: 5rem;

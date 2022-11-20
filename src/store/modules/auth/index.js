@@ -8,7 +8,8 @@ export default {
             userId : null,
             token : null,
             email : null,
-            tokenExpiration : null
+            tokenExpiration : null,
+            autoLogout:false
         }
     },
     getters,
